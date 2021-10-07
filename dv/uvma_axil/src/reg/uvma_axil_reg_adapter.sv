@@ -15,10 +15,7 @@
 
 
 /**
- * Object that converts between abstract register operations (UVM) and
- * Advanced Peripheral Bus operations.
- * 
- * Must be overriden by user if there are more than one slave to be selected.
+ * Object that converts between abstract register operations (UVM) and AXI-Lite Bus operations.
  */
 class uvma_axil_reg_adapter_c extends uvml_ral_reg_adapter_c;
    
@@ -46,6 +43,7 @@ endclass : uvma_axil_reg_adapter_c
 function uvma_axil_reg_adapter_c::new(string name="uvma_axil_reg_adapter");
    
    super.new(name);
+   supports_byte_enable = 1;
    
 endfunction : new
 
