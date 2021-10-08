@@ -1,10 +1,10 @@
 # About
-The Moore.io UVM AXI-Lite is a compact, sequence-based solution to Driving/Monitoring both sides of the interface.
+The Moore.io Arm® AMBA® IP Suite's Advanced eXtensible Interface (AXI)-Lite UVM Agent is a compact, sequence-based solution to Driving/Monitoring both sides of an AXI-Lite interface.  This project consists of the agent (`uvma_axil_pkg`), the self-testing UVM environment (`uvme_axil_st_pkg`) and the test bench (`uvmt_axil_st_pkg`) to verify the agent against itself.
 
 # IP
 * [Download latest release (.tgz)](Todo)
 * [View latest documentation](Todo)
-* [Browse code](https://github.com/Datum-Technology-Corporation/uvma_axil)
+* [Browse code](https://github.com/Datum-Technology-Corporation/uvma_axil/tree/main/dv/uvma_axil)
 
 # Metrics
 ## Stability
