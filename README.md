@@ -39,14 +39,13 @@ source ./setup_terminal.sh
 
 All jobs for simulation are performed via `dvm`.
 
-At any time, you can invoke its built-in documentation:
-
+> At any time, you can invoke its built-in documentation:
 
 ```
 dvm --help
 ```
 
-To run test 'all_access' with seed '1' and wave capture enabled:
+> To run test 'all_access' with seed '1' and wave capture enabled:
 
 ```
 clear && dvm all uvmt_axil_st -t all_access -s 1 -w
