@@ -21,12 +21,14 @@ cd ./sim
 
 **2. Project Setup**
 
-Only needs to be done once, or when libraries must be updated.
+Only needs to be done once, or when libraries must be updated. This will pull in dependencies from the web.
 ```
 ./setup_project.py
 ```
 
 **3. Terminal Setup**
+
+This must be done per terminal. The script included in this project is for bash:
 
 ```
 export VIVADO=/path/to/vivado/install/bin # Set locaton of Vivado installation
@@ -34,8 +36,17 @@ source ./setup_terminal.sh
 ```
 
 **4. Launch**
+All jobs for simulation are performed via `dvm`.
+
+At any time, you can invoke its built-in documentation:
+
 
 ```
 dvm --help
+```
+
+To run test 'all_access' with seed '1' and wave capture enabled:
+
+```
 clear && dvm all uvmt_axil_st -t all_access -s 1 -w
 ```
