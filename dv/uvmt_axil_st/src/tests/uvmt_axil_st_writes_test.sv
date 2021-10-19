@@ -19,7 +19,7 @@
  */
 class uvmt_axil_st_writes_test_c extends uvmt_axil_st_base_test_c;
    
-   rand uvme_axil_st_writes_vseq_c  writes_vseq;
+   rand uvme_axil_st_writes_vseq_c  writes_vseq; ///< 
    
    
    `uvm_component_utils(uvmt_axil_st_writes_test_c)

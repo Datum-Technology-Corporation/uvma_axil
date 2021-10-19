@@ -19,14 +19,14 @@
  * Does not generate any sequence items of its own. Subclasses must be run on
  * AMBA Advanced eXtensible Interface Virtual Sequencer (uvme_axil_st_vsqr_c) instance.
  */
-class uvme_axil_st_base_vseq_c extends uvm_sequence#(
+class uvme_axil_st_base_vseq_c extends uvml_vseq_c #(
    .REQ(uvm_sequence_item),
    .RSP(uvm_sequence_item)
 );
    
    // Environment handles
-   uvme_axil_st_cfg_c    cfg;
-   uvme_axil_st_cntxt_c  cntxt;
+   uvme_axil_st_cfg_c    cfg  ; ///< 
+   uvme_axil_st_cntxt_c  cntxt; ///< 
    
    
    `uvm_object_utils(uvme_axil_st_base_vseq_c)

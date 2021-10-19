@@ -18,7 +18,7 @@
  * Abstract object from which all other AMBA Advanced eXtensible Interface agent sequences must extend.
  * Subclasses must be run on AMBA Advanced eXtensible Interface sequencer (uvma_axil_sqr_c) instance.
  */
-class uvma_axil_base_seq_c extends uvm_sequence#(
+class uvma_axil_base_seq_c extends uvml_seq_c #(
    .REQ(uvma_axil_base_seq_item_c),
    .RSP(uvma_axil_mon_trn_c      )
 );

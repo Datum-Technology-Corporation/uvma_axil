@@ -17,7 +17,7 @@
 /**
  * Object holding virtual sequence library for AMBA Advanced eXtensible Interface test cases.
  */
-class uvmt_axil_st_vseq_lib_c extends uvm_sequence_library#(
+class uvmt_axil_st_vseq_lib_c extends uvml_vseq_lib_c #(
    .REQ(uvm_sequence_item),
    .RSP(uvm_sequence_item)
 );

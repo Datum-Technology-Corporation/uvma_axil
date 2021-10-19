@@ -18,21 +18,21 @@
  * Object encapsulating all parameters for creating, connecting and running all
  * AMBA Advanced eXtensible Interface agent (uvma_axil_agent_c) components.
  */
-class uvma_axil_cfg_c extends uvm_object;
+class uvma_axil_cfg_c extends uvml_cfg_c;
    
    // Generic options
-   rand bit                      enabled;
-   rand uvm_active_passive_enum  is_active;
-   rand uvm_sequencer_arb_mode   sqr_arb_mode;
-   rand bit                      cov_model_enabled;
-   rand bit                      trn_log_enabled;
+   rand bit                      enabled          ; ///< 
+   rand uvm_active_passive_enum  is_active        ; ///< 
+   rand uvm_sequencer_arb_mode   sqr_arb_mode     ; ///< 
+   rand bit                      cov_model_enabled; ///< 
+   rand bit                      trn_log_enabled  ; ///< 
    
    // Protocol parameters
-   rand uvma_axil_mode_enum      drv_mode;
-   rand int unsigned             addr_bus_width  ; // Measured in bits
-   rand int unsigned             data_bus_width  ; // Measured in bits
-   rand int unsigned             strobe_bus_width; // Measured in bits
-   rand uvma_axil_drv_idle_enum  drv_idle        ;
+   rand uvma_axil_mode_enum      drv_mode        ; ///< 
+   rand int unsigned             addr_bus_width  ; ///< Measured in bits
+   rand int unsigned             data_bus_width  ; ///< Measured in bits
+   rand int unsigned             strobe_bus_width; ///< Measured in bits
+   rand uvma_axil_drv_idle_enum  drv_idle        ; ///< 
    
    
    `uvm_object_utils_begin(uvma_axil_cfg_c)

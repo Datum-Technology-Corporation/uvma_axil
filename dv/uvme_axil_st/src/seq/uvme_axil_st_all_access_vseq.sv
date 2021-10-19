@@ -19,8 +19,8 @@
  */
 class uvme_axil_st_all_access_vseq_c extends uvme_axil_st_base_vseq_c;
    
-   rand uvma_axil_storage_slv_seq_c  slv_seq;
-   rand int unsigned                 num_all_access;
+   rand uvma_axil_storage_slv_seq_c  slv_seq       ; ///< 
+   rand int unsigned                 num_all_access; ///< 
    
    
    `uvm_object_utils_begin(uvme_axil_st_all_access_vseq_c)
@@ -30,7 +30,8 @@ class uvme_axil_st_all_access_vseq_c extends uvme_axil_st_base_vseq_c;
    
    
    constraint defaults_cons {
-      soft num_all_access == 100;
+      num_all_access >    0;
+      num_all_access <= 100;
    }
    
    

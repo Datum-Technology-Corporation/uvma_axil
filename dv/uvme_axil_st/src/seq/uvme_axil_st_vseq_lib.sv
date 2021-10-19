@@ -23,7 +23,7 @@
 /**
  * Virtual sequence library for AMBA Advanced eXtensible Interface environment.
  */
-class uvme_axil_st_vseq_lib_c extends uvm_sequence_library#(
+class uvme_axil_st_vseq_lib_c extends uvml_vseq_lib_c #(
    .REQ(uvm_sequence_item),
    .RSP(uvm_sequence_item)
 );
@@ -45,8 +45,9 @@ function uvme_axil_st_vseq_lib_c::new(string name="uvme_axil_st_vseq_lib");
    super.new(name);
    init_sequence_library();
    
-   // TODO Add sequences to uvme_axil_st_vseq_lib_c
-   //      Ex: add_sequence(uvme_axil_st_abc_vseq_c::get_type());
+   add_sequence(uvme_axil_st_reads_vseq_c     ::get_type());
+   add_sequence(uvme_axil_st_writes_vseq_c    ::get_type());
+   add_sequence(uvme_axil_st_all_access_vseq_c::get_type());
    
 endfunction : new
 

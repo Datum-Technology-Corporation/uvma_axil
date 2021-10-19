@@ -15,10 +15,10 @@
 
 
 /**
- * Object encapsulating configuration parameters common to most if not all tests
- * extending from uvmt_axil_st_base_test_c.
+ * Object encapsulating configuration parameters common to most if not all tests extending from
+ * uvmt_axil_st_base_test_c.
  */
-class uvmt_axil_st_test_cfg_c extends uvm_object;
+class uvmt_axil_st_test_cfg_c extends uvml_test_cfg_c;
    
    // Knobs
    rand int unsigned  clk_period        ; // Specified in picoseconds (ps)

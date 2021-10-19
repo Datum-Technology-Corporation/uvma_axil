@@ -17,18 +17,17 @@
 /**
  * Component sampling transactions from a AMBA Advanced eXtensible Interface virtual interface (uvma_axil_if).
  */
-class uvma_axil_mon_c extends uvm_monitor;
+class uvma_axil_mon_c extends uvml_mon_c;
    
    // Objects
-   uvma_axil_cfg_c    cfg;
-   uvma_axil_cntxt_c  cntxt;
+   uvma_axil_cfg_c    cfg  ; ///< 
+   uvma_axil_cntxt_c  cntxt; ///< 
    
    // TLM
-   uvm_analysis_port#(uvma_axil_mon_trn_c)  ap;
-   uvm_analysis_port#(uvma_axil_mon_trn_c)  sequencer_ap;
+   uvm_analysis_port#(uvma_axil_mon_trn_c)  ap          ; ///< 
+   uvm_analysis_port#(uvma_axil_mon_trn_c)  sequencer_ap; ///< 
    
-   // Handles to virtual interface modport
-   virtual uvma_axil_if.passive_mp  vif_passive_mp;
+   virtual uvma_axil_if.passive_mp  vif_passive_mp; ///< Handles to virtual interface modport
    
    
    `uvm_component_utils_begin(uvma_axil_mon_c)
@@ -128,12 +127,12 @@ function void uvma_axil_mon_c::build_phase(uvm_phase phase);
    super.build_phase(phase);
    
    void'(uvm_config_db#(uvma_axil_cfg_c)::get(this, "", "cfg", cfg));
-   if (!cfg) begin
+   if (cfg == null) begin
       `uvm_fatal("CFG", "Configuration handle is null")
    end
    
    void'(uvm_config_db#(uvma_axil_cntxt_c)::get(this, "", "cntxt", cntxt));
-   if (!cntxt) begin
+   if (cntxt == null) begin
       `uvm_fatal("CNTXT", "Context handle is null")
    end
    vif_passive_mp = cntxt.vif.passive_mp;

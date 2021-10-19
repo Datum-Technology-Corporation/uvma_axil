@@ -19,17 +19,17 @@
  * Subclasses must provide stimulus via the virtual sequencer by implementing
  * UVM runtime phases.
  */
-class uvmt_axil_st_base_test_c extends uvm_test;
+class uvmt_axil_st_base_test_c extends uvml_test_c;
    
    // Objects
-   rand uvmt_axil_st_test_cfg_c  test_cfg ;
-   rand uvme_axil_st_cfg_c       env_cfg  ;
-   uvme_axil_st_cntxt_c          env_cntxt;
-   uvml_logs_rs_text_c           rs       ;
+   rand uvmt_axil_st_test_cfg_c  test_cfg ; ///< 
+   rand uvme_axil_st_cfg_c       env_cfg  ; ///< 
+   uvme_axil_st_cntxt_c          env_cntxt; ///< 
+   uvml_logs_rs_text_c           rs       ; ///< 
    
    // Components
-   uvme_axil_st_env_c   env       ;
-   uvme_axil_st_vsqr_c  vsequencer;
+   uvme_axil_st_env_c   env       ; ///< 
+   uvme_axil_st_vsqr_c  vsequencer; ///< 
    
    // Handle to clock generation interface
    virtual uvmt_axil_st_clknrst_gen_if  clknrst_gen_vif;

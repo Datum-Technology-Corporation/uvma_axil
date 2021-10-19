@@ -54,7 +54,7 @@ task uvma_axil_storage_slv_seq_c::do_response(ref uvma_axil_mon_trn_c mon_req);
    bit [(`UVMA_AXIL_ADDR_MAX_SIZE-1):0]     addr = 0;
    uvma_axil_slv_seq_item_c                 _req;
    
-   if (mon_req.__has_error) begin
+   if (mon_req.has_error()) begin
       return;
    end
    

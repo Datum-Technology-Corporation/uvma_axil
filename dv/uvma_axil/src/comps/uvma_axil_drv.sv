@@ -17,23 +17,23 @@
 /**
  * Component driving an AMBA Advanced eXtensible Interface virtual interface (uvma_axil_if).
  */
-class uvma_axil_drv_c extends uvm_driver#(
+class uvma_axil_drv_c extends uvml_drv_c #(
    .REQ(uvma_axil_base_seq_item_c),
    .RSP(uvma_axil_mon_trn_c      )
 );
    
    // Objects
-   uvma_axil_cfg_c    cfg;
-   uvma_axil_cntxt_c  cntxt;
+   uvma_axil_cfg_c    cfg  ; ///< 
+   uvma_axil_cntxt_c  cntxt; ///< 
    
    // TLM
-   uvm_analysis_port     #(uvma_axil_mstr_seq_item_c)  mstr_ap;
-   uvm_analysis_port     #(uvma_axil_slv_seq_item_c )  slv_ap ;
-   uvm_tlm_analysis_fifo #(uvma_axil_mon_trn_c      )  mon_trn_fifo;
+   uvm_analysis_port     #(uvma_axil_mstr_seq_item_c)  mstr_ap     ; ///< 
+   uvm_analysis_port     #(uvma_axil_slv_seq_item_c )  slv_ap      ; ///< 
+   uvm_tlm_analysis_fifo #(uvma_axil_mon_trn_c      )  mon_trn_fifo; ///< 
    
    // Handles to virtual interface modport
-   virtual uvma_axil_if.active_mstr_mp  vif_mstr_mp;
-   virtual uvma_axil_if.active_slv_mp   vif_slv_mp ;
+   virtual uvma_axil_if.active_mstr_mp  vif_mstr_mp; ///< 
+   virtual uvma_axil_if.active_slv_mp   vif_slv_mp ; ///< 
    
    
    `uvm_component_utils_begin(uvma_axil_drv_c)
