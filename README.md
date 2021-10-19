@@ -12,12 +12,26 @@ The Moore.io Arm® AMBA® IP Suite's Advanced eXtensible Interface (AXI)-Lite UV
 
 
 # Simulation
+**1. Change directory to 'sim'**
+This is from where all jobs will be launched.
 ```
 cd ./sim
-cat ./README.md
+```
+
+**2. Project Setup**
+Only needs to be done once, or when libraries must be updated.
+```
 ./setup_project.py
+```
+
+**3. Terminal Setup**
+```
+export VIVADO=/path/to/vivado/install/bin # Set locaton of Vivado installation
 source ./setup_terminal.sh
-export VIVADO=/path/to/vivado/install
+```
+
+**4. Launch**
+```
 dvm --help
 clear && dvm all uvmt_axil_st -t all_access -s 1 -w
 ```
