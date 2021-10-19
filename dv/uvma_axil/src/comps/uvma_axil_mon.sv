@@ -282,7 +282,7 @@ task uvma_axil_mon_c::mon_read(output uvma_axil_mon_trn_c trn);
    
    // Capture response
    sample_read_trn_from_vif(trn);
-   trn.__timestamp_end = $realtime();
+   trn.set_timestamp_end($realtime());
    trn.response = uvma_axil_response_enum'(cntxt.vif./*passive_mp.*/mon_cb.rresp);
    
    // Wait for idle
@@ -343,7 +343,7 @@ task uvma_axil_mon_c::mon_write(output uvma_axil_mon_trn_c trn);
    
    // Capture response
    sample_write_trn_from_vif(trn);
-   trn.__timestamp_end = $realtime();
+   trn.set_timestamp_end($realtime());
    trn.response = uvma_axil_response_enum'(cntxt.vif./*passive_mp.*/mon_cb.rresp);
    
    // Wait for idle
