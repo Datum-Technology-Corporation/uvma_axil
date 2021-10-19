@@ -31,11 +31,12 @@ Only needs to be done once, or when libraries must be updated. This will pull in
 This must be done per terminal. The script included in this project is for bash:
 
 ```
-export VIVADO=/path/to/vivado/install/bin # Set locaton of Vivado installation
+export VIVADO=/path/to/vivado/bin # Set locaton of Vivado installation
 source ./setup_terminal.sh
 ```
 
 **4. Launch**
+
 All jobs for simulation are performed via `dvm`.
 
 At any time, you can invoke its built-in documentation:
