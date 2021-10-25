@@ -1,7 +1,7 @@
 # Home Page
 
-## [Get Latest Release](TODO)
-### [View Documentation online](TODO)
+## [Get Latest Release](https://mooreio.com/packages/uvma_axil.tgz)
+### View Documentation online (Coming Soon)
 
 ----------------
 
@@ -19,8 +19,8 @@ The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible In
 
 | Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
 | --------------------- | ---------------- | --------------- |
-| [Source Code](TODO) | [Source Code](TODO) | [Source Code](TODO) |
-| [Documentation](TODO) | [Documentation](TODO) | [Documentation](TODO) |
+| [Source Code](https://mooreio.com/packages/uvma_axil.tgz) | Source Code (Coming Soon) | Source Code (Coming Soon) |
+| Documentation (Coming Soon) | Documentation (Coming Soon) | Documentation (Coming Soon) |
 
 > **[View All Releases](TODO)**
 
@@ -29,8 +29,8 @@ The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible In
 
 | Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
 | --------------------- | ---------------- | --------------- |
-| [Functional Coverage Report](TODO) | [Functional Coverage Report](TODO) | [Functional Coverage Report](TODO) |
-| [Release Regression Test Report](TODO) | [Regression Test Report](TODO) | [Regression Test Report](TODO) |
+| Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) |
+| Release Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) |
 
 
 ----------------
