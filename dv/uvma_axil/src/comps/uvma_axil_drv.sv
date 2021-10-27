@@ -316,6 +316,12 @@ task uvma_axil_drv_c::drv_mstr_read_req(ref uvma_axil_mstr_seq_item_c req);
          repeat (req.data_latency) begin
             @(cntxt.vif./*active_mstr_mp.*/drv_mstr_cb);
          end
+         for (int unsigned ii=0; ii<cfg.data_bus_width; ii++) begin
+            cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.wdata[ii] <= 0;
+         end
+         for (int unsigned ii=0; ii<cfg.strobe_bus_width; ii++) begin
+            cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.wstrb[ii] <= 0;
+         end
          cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.rready <= 1'b1;
       end
    join

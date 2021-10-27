@@ -384,6 +384,9 @@ task uvma_axil_mon_c::sample_read_trn_from_vif(output uvma_axil_mon_trn_c trn);
    for (int unsigned ii=0; ii<cfg.addr_bus_width; ii++) begin
       trn.address[ii] = cntxt.vif./*passive_mp.*/mon_cb.araddr[ii];
    end
+   for (int unsigned ii=0; ii<cfg.strobe_bus_width; ii++) begin
+      trn.strobe[ii] = cntxt.vif./*passive_mp.*/mon_cb.wstrb[ii];
+   end
    for (int unsigned ii=0; ii<cfg.data_bus_width; ii++) begin
       trn.data[ii] = cntxt.vif./*passive_mp.*/mon_cb.rdata[ii];
    end
