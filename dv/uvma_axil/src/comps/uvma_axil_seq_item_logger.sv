@@ -128,7 +128,7 @@ class uvma_axil_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
          end
          
          UVMA_AXIL_ACCESS_WRITE: begin
-            data_str = $sformatf("%h", t.req_trn.data  );
+            data_str = $sformatf("%h", t.req_trn.data);
          end
       endcase
       
