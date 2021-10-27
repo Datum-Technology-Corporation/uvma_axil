@@ -42,10 +42,10 @@ module uvmt_axil_st_tb;
    initial begin
       // Specify time format for simulation
       $timeformat(
-         /*.units_number       (*/   -9/*)*/,
-         /*.precision_number   (*/    3/*)*/,
-         /*.suffix_string      (*/" ns"/*)*/,
-         /*.minimum_field_width(*/   18/*)*/ 
+         .units_number       (   -9),
+         .precision_number   (    3),
+         .suffix_string      (" ns"),
+         .minimum_field_width(   18) 
       );
       
       // Add interfaces to uvm_config_db
@@ -54,7 +54,7 @@ module uvmt_axil_st_tb;
       uvm_config_db#(virtual uvma_axil_if               )::set(null, "*.env.slv_agent" , "vif"            , slv_if        );
       
       // Run test
-      uvm_top.enable_print_topology = 1;
+      uvm_top.enable_print_topology = 0;
       uvm_top.finish_on_completion  = 1;
       uvm_top.run_test();
    end

@@ -54,10 +54,13 @@ function uvm_sequence_item uvma_axil_reg_adapter_c::reg2bus(const ref uvm_reg_bu
    
    axil_trn.access_type = (rw.kind == UVM_READ) ? UVMA_AXIL_ACCESS_READ : UVMA_AXIL_ACCESS_WRITE;
    axil_trn.address     = rw.addr;
-   axil_trn.wstrobe     = rw.byte_en;
    
    if (rw.kind == UVM_WRITE) begin
-      axil_trn.wdata = rw.data;
+      axil_trn.wstrobe = rw.byte_en;
+      axil_trn.wdata   = rw.data;
+   end
+   else begin
+      axil_trn.wstrobe = '1;
    end
    
    return axil_trn;
@@ -75,11 +78,17 @@ function void uvma_axil_reg_adapter_c::bus2reg(uvm_sequence_item bus_item, ref u
    
    rw.kind = (axil_trn.access_type == UVMA_AXIL_ACCESS_READ) ? UVM_READ : UVM_WRITE;
    rw.addr = axil_trn.address;
-   rw.byte_en = axil_trn.wstrobe;
    
    case (axil_trn.access_type)
-      UVMA_AXIL_ACCESS_READ : rw.data = axil_trn.rdata;
-      UVMA_AXIL_ACCESS_WRITE: rw.data = axil_trn.wdata;
+      UVMA_AXIL_ACCESS_READ : begin
+         rw.data    = axil_trn.rdata;
+         rw.byte_en = '1;
+      end
+      
+      UVMA_AXIL_ACCESS_WRITE: begin
+         rw.data    = axil_trn.wdata;
+         rw.byte_en = axil_trn.wstrobe;
+      end
       
       default: `uvm_fatal("AXIL_REG_ADAPTER", $sformatf("Invalid access_type: %0d", axil_trn.access_type))
    endcase
