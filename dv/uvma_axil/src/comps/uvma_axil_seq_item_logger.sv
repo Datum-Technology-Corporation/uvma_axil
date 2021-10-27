@@ -70,7 +70,6 @@ class uvma_axil_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       
       string access_str = "";
       string rsp_str    = "";
-      string strobe_str = "";
       string data_str   = "";
       
       case (t.access_type)
@@ -87,17 +86,15 @@ class uvma_axil_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
       
       case (t.access_type)
          UVMA_AXIL_ACCESS_READ: begin
-            strobe_str = "   ";
-            data_str   = $sformatf("%b", t.rdata  );
+            data_str = $sformatf("%h", t.rdata);
          end
          
          UVMA_AXIL_ACCESS_WRITE: begin
-            strobe_str = $sformatf("%b", t.wstrobe);
-            data_str   = $sformatf("%h", t.wdata  );
+            data_str = $sformatf("%h", t.wdata);
          end
       endcase
       
-      fwrite($sformatf(" %t | %s | %s | %h | %s | %s ", $realtime(), access_str, rsp_str, t.address, strobe_str, data_str));
+      fwrite($sformatf(" %t | %s | %s | %h |  %b | %s ", $realtime(), access_str, rsp_str, t.address, t.wstrobe, data_str));
       
    endfunction : write_mstr
    
@@ -132,7 +129,7 @@ class uvma_axil_seq_item_logger_c extends uvml_logs_seq_item_logger_c#(
          end
       endcase
       
-      fwrite($sformatf(" %t | %s | %s | %h |  %h | %s ", $realtime(), access_str, rsp_str, t.req_trn.address, t.req_trn.strobe, data_str));
+      fwrite($sformatf(" %t | %s | %s | %h |  %b | %s ", $realtime(), access_str, rsp_str, t.req_trn.address, t.req_trn.strobe, data_str));
       
    endfunction : write_slv
    
