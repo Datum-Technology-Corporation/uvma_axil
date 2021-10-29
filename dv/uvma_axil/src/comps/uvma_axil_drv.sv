@@ -374,6 +374,7 @@ task uvma_axil_drv_c::drv_mstr_write_req(ref uvma_axil_mstr_seq_item_c req);
          while (cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.awready !== 1'b1) begin
             @(cntxt.vif./*active_mstr_mp.*/drv_mstr_cb);
          end
+         cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.awvalid <= 1'b0;
          `uvm_info("AXIL_DRV", $sformatf("Finished write address phase for req:\n%s", req.sprint()), UVM_DEBUG)
       end
       
@@ -395,6 +396,7 @@ task uvma_axil_drv_c::drv_mstr_write_req(ref uvma_axil_mstr_seq_item_c req);
          while (cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.wready !== 1'b1) begin
             @(cntxt.vif./*active_mstr_mp.*/drv_mstr_cb);
          end
+         cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.wvalid  <= 1'b0;
          `uvm_info("AXIL_DRV", $sformatf("Finished write data phase for req:\n%s", req.sprint()), UVM_DEBUG)
       end
       
@@ -421,8 +423,6 @@ task uvma_axil_drv_c::drv_mstr_write_req(ref uvma_axil_mstr_seq_item_c req);
    `uvm_info("AXIL_DRV", $sformatf("Finished response hold cycles (%0d) for req:\n%s", req.hold_duration, req.sprint()), UVM_DEBUG)
    
    // Tail
-   cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.awvalid <= 1'b0;
-   cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.wvalid  <= 1'b0;
    cntxt.vif./*active_mstr_mp.*/drv_mstr_cb.bready  <= 1'b0;
    drv_mstr_idle(UVMA_AXIL_ACCESS_WRITE);
    repeat (req.tail_duration) begin
