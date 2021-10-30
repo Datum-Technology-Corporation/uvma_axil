@@ -30,7 +30,7 @@ The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible In
 | Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
 | --------------------- | ---------------- | --------------- |
 | Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) | Functional Coverage Report (Coming Soon) |
-| Release Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) |
+| [Release Regression Test Report](https://mooreio.com/packages/uvma_axil/sim/results.html) | Regression Test Report (Coming Soon) | Regression Test Report (Coming Soon) |
 
 
 ----------------
