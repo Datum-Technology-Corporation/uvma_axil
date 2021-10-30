@@ -22,7 +22,7 @@ The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible In
 | [Source Code](https://mooreio.com/packages/uvma_axil.tgz) | Source Code (Coming Soon) | Source Code (Coming Soon) |
 | Documentation (Coming Soon) | Documentation (Coming Soon) | Documentation (Coming Soon) |
 
-> **[View All Releases](TODO)**
+> **[View All Releases](releases.md)**
 
 
 ## Metrics
