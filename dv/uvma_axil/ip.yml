@@ -1,191 +1,44 @@
----
-## 
-## Copyright 2021 Datum Technology Corporation
-## SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
-## 
-## Licensed under the Solderpad Hardware License v 2.1 (the "License"); you may
-## not use this file except in compliance with the License, or, at your option,
-## the Apache License version 2.0. You may obtain a copy of the License at
-## 
-##     https://solderpad.org/licenses/SHL-2.1/
-## 
-## Unless required by applicable law or agreed to in writing, any work
-## distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-## WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-## License for the specific language governing permissions and limitations
-## under the License.
-## 
-
-
-core:
-   uid: ef15c1cc-2d1d-4fe6-b3c1-c9872ed1f221
-   name: "uvml_axil"
-   type: "verification-ip"
-   aliases: null
-   full-name: "AXI-Lite UVM Agent"
-   version: "0.0.1"
-   release-date: 2021-03-28
-   description: >
-      UVM Agent for the AMBA Advanced eXtensible Interface protocol.
-   keywords: [ "amba", "arm" ]
-   catalog: "https://moore.io/ip/catalog"
-   suite: "mio-arm"
-   copyright-holders: ["Datum Technology Corporation"]
-   logo: "https://moore.io/assets/images/uvma_axil_logo.svg"
-   license: "SHL-2.1"
-   private: False
-
-
-verification-ip:
-   methodology: "uvm"
-   type: "agent"
-   sub-type: "asymmetric"
-   sub-sub-type: "half-duplex"
-   block-diagram: "https://moore.io/assets/images/uvma_axil_block_diagram.svg"
-   languages:
-      - { name: "system-verilog", version: "^" }
-   dependencies:
-      - { name: "mio@uvm", version: "^", notes: "" }
-      - { name: "mio@uvml_hrtbt", version: "^", notes: "" }
-      - { name: "mio@uvml_logs", version: "^", notes: "" }
-      - { name: "mio@uvml_trn", version: "^", notes: "" }
-      - { name: "mio@uvml_reg", version: "^", notes: "" }
-   simulators-supported:
-      - { name: "xilinx", version: "2020.2", level: 100, notes: "" }
-      - { name: "xilinx", version: "2019.2", level:  75, notes: "" }
-
-
-community:
-   contributors:
-      - {
-         name: "David Poulin",
-         org: "Datum Technology Corporation",
-         email: "dpoulin@datumtc.ca",
-         linked-in: "https://www.linkedin.com/in/david-poulin-24674734/"
-      }
-      - {
-         name: "Abdoulaye Berthe",
-         org: "SmartComm Technologies",
-         email: "a.b.berthe@ieee.org",
-         linked-in: "https://www.linkedin.com/in/abdoulaye-berth%C3%A9-a2a138165/"
-      }
-   home-page: "https://github.com/Datum-Technology-Corporation/mio_arm/projects/1"
-   repository:
-      type: "git"
-      url: "https://github.com/Datum-Technology-Corporation/mio_arm"
-   bugs:
-      url: "https://github.com/Datum-Technology-Corporation/mio_arm/issues"
-      email: "bugs@moore.io"
-   funding:
-      type: ""
-      url: ""
-
+ip:
+  name: "uvma_axil"
+  version: "1.0.0 Beta 0"
+  full-name: "Moore.io AXI-Lite UVM Agent"
+  type: "DV"
+  sub-type: "UVM Agent"
+  sub-sub-type: "Simplex; Non-Layered"
+  description: >
+    
+  home-page: "https://datum-technology-corporation.github.io/uvma_axil/"
+  repo-uri: "https://github.com/Datum-Technology-Corporation/uvma_axil.git"
+  bugs: "https://github.com/Datum-Technology-Corporation/uvma_axil/issues"
+  aliases: []
+  logo: ""
+  block-diagram: ""
+  languages: ["sv"]
+  simulators-supported:
+    - { name: "vivado", version: "2021.1" }
+  tags: []
+  copyright-holders: ["Datum Technology Corporation"]
+  licenses: ["SHL-2.1"]
 
 structure:
-   scripts-paths: [ "/bin" ]
-   docs-paths: [ "/docs" ]
+   scripts-paths : [ "/bin"      ]
+   docs-paths    : [ "/docs"     ]
    examples-paths: [ "/examples" ]
-   src-paths: [ "/src" ]
+   src-paths     : [ "/src"      ]
 
+dependencies:
+  - { type: "DV", name: "uvm"      , repo-uri: "https://github.com/Datum-Technology-Corporation/uvm.git"      , repo-branch: "main", repo-path: "dv/uvm"       }
+  - { type: "DV", name: "uvml"     , repo-uri: "https://github.com/Datum-Technology-Corporation/uvml.git"     , repo-branch: "main", repo-path: "dv/uvml"      }
+  - { type: "DV", name: "uvml_logs", repo-uri: "https://github.com/Datum-Technology-Corporation/uvml_logs.git", repo-branch: "main", repo-path: "dv/uvml_logs" }
 
 hdl-src:
-   files: ["/*/*.sv"]
-   top-files: [ "/uvma_axil_pkg.sv" ]
-   top-modules:
-   tests-paths: [ "/ut" ]
-   compilation-arguments: ["+define+UVM_MAX_PACK_BYTES=65_536"]
+  directories: [".", "comps", "obj", "reg", "seq"]
+  tests-name-template: ""
+  flists:
+    metrics : [ "src/uvma_axil_pkg.flist"      ]
+    riviera : [ "src/uvma_axil_pkg.flist"      ]
+    questa  : [ "src/uvma_axil_pkg.flist"      ]
+    vcs     : [ "src/uvma_axil_pkg.flist"      ]
+    vivado  : [ "src/uvma_axil_pkg.flist.xsim" ]
+    xcelium : [ "src/uvma_axil_pkg.flist"      ]
 
-
-events:
-   pre-git-pull:
-   post-git-pull:
-      - '$refactor.disconnect("*/*")'
-      - '$refactor.connect("*/*")'
-   pre-init:
-   post-init:
-   pre-library:
-   post-library:
-   pre-compilation:
-   post-compilation:
-   pre-elaboration:
-   post-elaboration:
-   pre-simulation:
-   post-simulation:
-   pre-results-processing:
-   post-results-processing:
-   pre-results-upload:
-   post-results-upload:
-   pre-shutdown:
-   pre-git-commit: [ 'pre-commit.py' ]
-   post-git-commit:
-
-
-parameters:
-   git-pull:
-   init:
-   library:
-   compilation:
-      - {
-         name: "max-data-width",
-         type: "number",
-         min: 8,
-         max: 128,
-         cli-str: "+define+UVMA_AXIL_MAX_DATA_WIDTH", default: 32
-      }
-      - {
-         name: "max-address-width",
-         type: "number",
-         min: 8,
-         max: 128,
-         cli-str: "+define+UVMA_AXIL_MAX_ADDRESS_WIDTH",
-         default: 32
-      }
-      - {
-         name: "include-if-checker",
-         type: "boolean",
-         cli-str: "+define+UVMA_AXIL_INC_IF_CHKR",
-         default: False
-      }
-   elaboration:
-   simulation:
-   results-processing:
-   results-upload:
-   shutdown:
-
-
-configuration :
-   # data store for the IP
-
-
-template-metadata:
-   name: ""
-   url: ""
-   input-parameters: null
-
-
-
-
-
-
-
-# no actual rtl in this vip, just here for demonstration
-rtl-ip:
-   languages:
-      - { name: "system-verilog", version: "^" }
-   dependencies :
-   simulators-supported:
-   type:
-   sub-type:
-   sub-sub-type:
-   block-diagram:
-
-
-# Demonstration only
-edapp:
-  language: "python" # or tcl or nodejs
-
-
-# demonstration only
-python-src:
-tcl-src:
-npm-module:
