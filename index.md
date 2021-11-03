@@ -17,7 +17,7 @@ The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible In
 
 ## Downloads
 
-| Latest Release (v1.0 Beta 0) | Stable (Nightly) | Stable (Weekly) |
+| Latest Release (v1.0 Beta 0) | Stable (Weekly) | Stable (Nightly) |
 | --------------------- | ---------------- | --------------- |
 | [Source Code](https://mooreio.com/packages/uvma_axil.tgz) | Source Code (Coming Soon) | Source Code (Coming Soon) |
 | [Documentation](https://mooreio.com/packages/uvma_axil/dox_out/) | Documentation (Coming Soon) | Documentation (Coming Soon) |
