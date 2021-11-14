@@ -137,7 +137,7 @@ task uvme_axil_st_prd_c::run_phase(uvm_phase phase);
             forever begin
                // Get next transaction and copy it
                e2e_in_fifo.get(e2e_in_trn);
-               e2e_out_trn = uvma_axil_mon_trn_c::type_id::create("e2e_out_trn");//uvme_axil_st_e2e_mon_trn_c::type_id::create("e2e_out_trn");
+               e2e_out_trn = uvme_axil_st_e2e_mon_trn_c::type_id::create("e2e_out_trn");
                e2e_out_trn.copy(e2e_in_trn);
                
                if (cntxt.slv_cntxt.reset_state != UVMA_AXIL_RESET_STATE_POST_RESET) begin
@@ -183,8 +183,8 @@ task uvme_axil_st_prd_c::run_phase(uvm_phase phase);
                // Get next transaction
                slv_in_fifo.get(slv_in_trn);
                slv_out_trn = uvme_axil_st_slv_mon_trn_c::type_id::create("slv_out_trn");
-               mstr_out_trn.data     = mstr_in_trn.rdata   ;
-               mstr_out_trn.response = mstr_in_trn.response;
+               slv_out_trn.data     = slv_in_trn.rdata   ;
+               slv_out_trn.response = slv_in_trn.response;
                
                if (cntxt.slv_cntxt.reset_state != UVMA_AXIL_RESET_STATE_POST_RESET) begin
                   slv_out_trn.set_may_drop(1);

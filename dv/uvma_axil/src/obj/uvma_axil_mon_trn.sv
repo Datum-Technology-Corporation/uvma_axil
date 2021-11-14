@@ -33,11 +33,11 @@ class uvma_axil_mon_trn_c extends uvml_mon_trn_c;
    
    
    `uvm_object_utils_begin(uvma_axil_mon_trn_c)
-      `uvm_field_enum(uvma_axil_access_type_enum, access_type, UVM_DEFAULT)
-      `uvm_field_int (                            address    , UVM_DEFAULT)
-      `uvm_field_int (                            data       , UVM_DEFAULT)
-      `uvm_field_int (                            strobe     , UVM_DEFAULT)
-      `uvm_field_enum(uvma_axil_response_enum,    response   , UVM_DEFAULT)
+      `uvm_field_enum(uvma_axil_access_type_enum, access_type, UVM_DEFAULT + UVM_NOCOMPARE)
+      `uvm_field_int (                            address    , UVM_DEFAULT + UVM_NOCOMPARE)
+      `uvm_field_int (                            data       , UVM_DEFAULT + UVM_NOCOMPARE)
+      `uvm_field_int (                            strobe     , UVM_DEFAULT + UVM_NOCOMPARE)
+      `uvm_field_enum(uvma_axil_response_enum,    response   , UVM_DEFAULT + UVM_NOCOMPARE)
    `uvm_object_utils_end
    
    
@@ -45,6 +45,11 @@ class uvma_axil_mon_trn_c extends uvml_mon_trn_c;
     * Default constructor.
     */
    extern function new(string name="uvma_axil_mon_trn");
+   
+   /**
+    * TODO Describe uvma_axil_mon_trn_c::do_compare()
+    */
+   extern virtual function bit do_compare(uvm_object rhs, uvm_comparer comparer);
    
 endclass : uvma_axil_mon_trn_c
 
@@ -54,6 +59,24 @@ function uvma_axil_mon_trn_c::new(string name="uvma_axil_mon_trn");
    super.new(name);
    
 endfunction : new
+
+
+function bit uvma_axil_mon_trn_c::do_compare(uvm_object rhs, uvm_comparer comparer);
+   
+   uvma_axil_mon_trn_c  rhs_;
+   
+   if (!$cast(rhs_, rhs)) begin
+      `uvm_fatal("UVME_AXIL_ST_E2E_MON_TRN", $sformatf("Could not cast 'rhs' (%s) to 'rhs_' (%s)", $typename(rhs), $typename(rhs_)))
+   end
+   
+   do_compare = 1;
+   do_compare &= comparer.compare_field_int("access_type", access_type, rhs_.access_type, $bits(access_type));
+   do_compare &= comparer.compare_field_int("address"    , address    , rhs_.address    , addr_bus_width    );
+   do_compare &= comparer.compare_field_int("data"       , data       , rhs_.data       , data_bus_width    );
+   do_compare &= comparer.compare_field_int("strobe"     , strobe     , rhs_.strobe     , data_bus_width/8  );
+   do_compare &= comparer.compare_field_int("response"   , response   , rhs_.response   , $bits(response)   );
+   
+endfunction : do_compare
 
 
 `endif // __UVMA_AXIL_MON_TRN_SV__

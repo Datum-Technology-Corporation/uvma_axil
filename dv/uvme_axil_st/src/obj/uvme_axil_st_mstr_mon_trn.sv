@@ -29,7 +29,7 @@ class uvme_axil_st_mstr_mon_trn_c extends uvma_axil_mon_trn_c;
    /**
     * TODO Describe uvme_axil_st_mstr_mon_trn_c::do_compare()
     */
-   extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+   extern virtual function bit do_compare(uvm_object rhs, uvm_comparer comparer);
    
 endclass : uvme_axil_st_mstr_mon_trn_c
 
@@ -49,6 +49,7 @@ function bit uvme_axil_st_mstr_mon_trn_c::do_compare(uvm_object rhs, uvm_compare
       `uvm_fatal("UVME_AXIL_ST_MSTR_MON_TRN", $sformatf("Could not cast 'rhs' (%s) to 'rhs_' (%s)", $typename(rhs), $typename(rhs_)))
    end
    
+   do_compare = 1;
    do_compare &= comparer.compare_field_int("access_type", access_type, rhs_.access_type, $bits(access_type));
    do_compare &= comparer.compare_field_int("address"    , address    , rhs_.address    , addr_bus_width    );
    do_compare &= comparer.compare_field_int("data"       , data       , rhs_.data       , data_bus_width    );

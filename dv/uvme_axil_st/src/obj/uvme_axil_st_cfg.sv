@@ -100,8 +100,8 @@ class uvme_axil_st_cfg_c extends uvml_cfg_c;
       sb_slv_cfg .mode == UVML_SB_MODE_IN_ORDER;
       if (scoreboarding_enabled) {
          sb_e2e_cfg .enabled == 1;
-         sb_mstr_cfg.enabled == 0;
-         sb_slv_cfg .enabled == 0;
+         sb_mstr_cfg.enabled == 1;
+         sb_slv_cfg .enabled == 1;
       }
       else {
          sb_e2e_cfg .enabled == 0;
