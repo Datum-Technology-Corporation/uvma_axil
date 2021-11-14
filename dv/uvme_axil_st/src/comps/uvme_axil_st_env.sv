@@ -29,11 +29,14 @@ class uvme_axil_st_env_c extends uvml_env_c;
    uvma_axil_agent_c  slv_agent ; ///< 
    
    // Components
-   uvme_axil_st_cov_model_c     cov_model   ; ///< 
-   uvme_axil_st_prd_c           predictor   ; ///< 
-   uvme_axil_st_sb_simplex_c    sb          ; ///< 
-   uvme_axil_st_vsqr_c          vsequencer  ; ///< 
-   uvme_axil_st_slv_sb_delay_c  slv_sb_delay; ///< 
+   uvme_axil_st_vsqr_c                  vsequencer; ///< 
+   uvme_axil_st_prd_c                   predictor ; ///< 
+   uvme_axil_st_sb_simplex_c            sb_e2e    ; ///< 
+   uvme_axil_st_sb_simplex_c            sb_mstr   ; ///< 
+   uvme_axil_st_sb_simplex_c            sb_slv    ; ///< 
+   uvml_delay_c #(uvma_axil_mon_trn_c)  delay_e2e ; ///< 
+   uvml_delay_c #(uvma_axil_mon_trn_c)  delay_mstr; ///< 
+   uvml_delay_c #(uvma_axil_mon_trn_c)  delay_slv ; ///< 
    
    
    `uvm_component_utils_begin(uvme_axil_st_env_c)
@@ -89,11 +92,6 @@ class uvme_axil_st_env_c extends uvml_env_c;
    extern function void create_vsequencer();
    
    /**
-    * Creates environment's coverage model.
-    */
-   extern function void create_cov_model();
-   
-   /**
     * Connects agents to predictor.
     */
    extern function void connect_predictor();
@@ -108,17 +106,17 @@ class uvme_axil_st_env_c extends uvml_env_c;
     */
    extern function void assemble_vsequencer();
    
-   /**
-    * Connects environment coverage model to agents/scoreboards/predictor.
-    */
-   extern function void connect_coverage_model();
-   
 endclass : uvme_axil_st_env_c
 
 
 function uvme_axil_st_env_c::new(string name="uvme_axil_st_env", uvm_component parent=null);
    
    super.new(name, parent);
+   
+   set_type_override_by_type(
+      uvma_axil_cov_model_c   ::get_type(),
+      uvme_axil_st_cov_model_c::get_type(),
+   );
    
 endfunction : new
 
@@ -150,10 +148,6 @@ function void uvme_axil_st_env_c::build_phase(uvm_phase phase);
       if (cfg.is_active) begin
          create_vsequencer();
       end
-      
-      if (cfg.cov_model_enabled) begin
-         create_cov_model();
-      end
    end
    
 endfunction : build_phase
@@ -172,10 +166,6 @@ function void uvme_axil_st_env_c::connect_phase(uvm_phase phase);
       if (cfg.is_active) begin
          assemble_vsequencer();
       end
-      
-      if (cfg.cov_model_enabled) begin
-         connect_coverage_model();
-      end
    end
    
 endfunction: connect_phase
@@ -183,20 +173,24 @@ endfunction: connect_phase
 
 function void uvme_axil_st_env_c::assign_cfg();
    
-   uvm_config_db#(uvme_axil_st_cfg_c)::set(this, "*"         , "cfg", cfg         );
-   uvm_config_db#(uvma_axil_cfg_c   )::set(this, "mstr_agent", "cfg", cfg.mstr_cfg);
-   uvm_config_db#(uvma_axil_cfg_c   )::set(this, "slv_agent" , "cfg", cfg.slv_cfg );
-   uvm_config_db#(uvml_sb_simplex_cfg_c     )::set(this, "sb"        , "cfg", cfg.sb_cfg  );
+   uvm_config_db#(uvme_axil_st_cfg_c   )::set(this, "*"         , "cfg", cfg            );
+   uvm_config_db#(uvma_axil_cfg_c      )::set(this, "mstr_agent", "cfg", cfg.mstr_cfg   );
+   uvm_config_db#(uvma_axil_cfg_c      )::set(this, "slv_agent" , "cfg", cfg.slv_cfg    );
+   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb_e2e"    , "cfg", cfg.sb_e2e_cfg );
+   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb_mstr"   , "cfg", cfg.sb_mstr_cfg);
+   uvm_config_db#(uvml_sb_simplex_cfg_c)::set(this, "sb_slv"    , "cfg", cfg.sb_slv_cfg );
    
 endfunction: assign_cfg
 
 
 function void uvme_axil_st_env_c::assign_cntxt();
    
-   uvm_config_db#(uvme_axil_st_cntxt_c)::set(this, "*"         , "cntxt", cntxt           );
-   uvm_config_db#(uvma_axil_cntxt_c   )::set(this, "mstr_agent", "cntxt", cntxt.mstr_cntxt);
-   uvm_config_db#(uvma_axil_cntxt_c   )::set(this, "slv_agent" , "cntxt", cntxt.slv_cntxt );
-   uvm_config_db#(uvml_sb_simplex_cntxt_c     )::set(this, "sb"        , "cntxt", cntxt.sb_cntxt  );
+   uvm_config_db#(uvme_axil_st_cntxt_c   )::set(this, "*"         , "cntxt", cntxt              );
+   uvm_config_db#(uvma_axil_cntxt_c      )::set(this, "mstr_agent", "cntxt", cntxt.mstr_cntxt   );
+   uvm_config_db#(uvma_axil_cntxt_c      )::set(this, "slv_agent" , "cntxt", cntxt.slv_cntxt    );
+   uvm_config_db#(uvml_sb_simplex_cntxt_c)::set(this, "sb_e2e"    , "cntxt", cntxt.sb_e2e_cntxt );
+   uvm_config_db#(uvml_sb_simplex_cntxt_c)::set(this, "sb_mstr"   , "cntxt", cntxt.sb_mstr_cntxt);
+   uvm_config_db#(uvml_sb_simplex_cntxt_c)::set(this, "sb_slv"    , "cntxt", cntxt.sb_slv_cntxt );
    
 endfunction: assign_cntxt
 
@@ -212,9 +206,13 @@ endfunction: create_agents
 function void uvme_axil_st_env_c::create_env_components();
    
    if (cfg.scoreboarding_enabled) begin
-      predictor    = uvme_axil_st_prd_c         ::type_id::create("predictor"   , this);
-      sb           = uvme_axil_st_sb_simplex_c  ::type_id::create("sb"          , this);
-      slv_sb_delay = uvme_axil_st_slv_sb_delay_c::type_id::create("slv_sb_delay", this);
+      predictor  = uvme_axil_st_prd_c                 ::type_id::create("predictor" , this);
+      sb_e2e     = uvme_axil_st_sb_simplex_c          ::type_id::create("sb_e2e"    , this);
+      sb_mstr    = uvme_axil_st_sb_simplex_c          ::type_id::create("sb_mstr"   , this);
+      sb_slv     = uvme_axil_st_sb_simplex_c          ::type_id::create("sb_slv"    , this);
+      delay_e2e  = uvml_delay_c #(uvma_axil_mon_trn_c)::type_id::create("delay_e2e" , this);
+      delay_mstr = uvml_delay_c #(uvma_axil_mon_trn_c)::type_id::create("delay_mstr", this);
+      delay_slv  = uvml_delay_c #(uvma_axil_mon_trn_c)::type_id::create("delay_slv" , this);
    end
    
 endfunction: create_env_components
@@ -227,29 +225,56 @@ function void uvme_axil_st_env_c::create_vsequencer();
 endfunction: create_vsequencer
 
 
-function void uvme_axil_st_env_c::create_cov_model();
-   
-   cov_model = uvme_axil_st_cov_model_c::type_id::create("cov_model", this);
-   
-endfunction: create_cov_model
-
-
 function void uvme_axil_st_env_c::connect_predictor();
    
    // Connect agent -> predictor
-   mstr_agent.mon_ap.connect(predictor.in_export);
+   if (cfg.sb_e2e_cfg.enabled) begin
+      mstr_agent.mon_ap.connect(predictor.e2e_in_export);
+   end
+   if (cfg.sb_mstr_cfg.enabled) begin
+      mstr_agent.drv_mstr_ap.connect(predictor.mstr_in_export);
+   end
+   if (cfg.sb_slv_cfg.enabled) begin
+      slv_agent.drv_slv_ap.connect(predictor.slv_in_export);
+   end
    
 endfunction: connect_predictor
 
 
 function void uvme_axil_st_env_c::connect_scoreboard();
    
-   // Connect agent -> scoreboard
-   slv_agent   .mon_ap.connect(slv_sb_delay.in_export );
-   slv_sb_delay.out_ap.connect(sb          .act_export);
+   if (cfg.sb_e2e_cfg.enabled) begin
+      // Connect agent -> delay
+      slv_agent.mon_ap.connect(delay_e2e.in_export);
+      // Connect delay -> scoreboard
+      delay_e2e.out_ap.connect(sb_e2e.act_export);
+      // Connect predictor -> scoreboard
+      predictor.e2e_out_ap.connect(sb_e2e.exp_export);
+      // Configure delay
+      delay_e2e.set_duration(100);
+   end
    
-   // Connect predictor -> scoreboard
-   predictor.out_ap.connect(sb.exp_export);
+   if (cfg.sb_mstr_cfg.enabled) begin
+      // Connect agent -> delay
+      mstr_agent.mon_ap.connect(delay_mstr.in_export);
+      // Connect delay -> scoreboard
+      delay_mstr.out_ap.connect(sb_mstr.act_export);
+      // Connect predictor -> scoreboard
+      predictor.mstr_out_ap.connect(sb_mstr.exp_export);
+      // Configure delay
+      delay_mstr.set_duration(100);
+   end
+   
+   if (cfg.sb_slv_cfg.enabled) begin
+      // Connect agent -> delay
+      slv_agent.mon_ap.connect(delay_slv.in_export);
+      // Connect delay -> scoreboard
+      delay_slv.out_ap.connect(sb_slv.act_export);
+      // Connect predictor -> scoreboard
+      predictor.slv_out_ap.connect(sb_slv.exp_export);
+      // Configure delay
+      delay_slv.set_duration(100);
+   end
    
 endfunction: connect_scoreboard
 
@@ -260,16 +285,6 @@ function void uvme_axil_st_env_c::assemble_vsequencer();
    vsequencer.slv_sequencer  = slv_agent .sequencer;
    
 endfunction: assemble_vsequencer
-
-
-function void uvme_axil_st_env_c::connect_coverage_model();
-   
-   mstr_agent.drv_mstr_ap.connect(cov_model.mstr_seq_item_fifo.analysis_export);
-   mstr_agent.mon_ap     .connect(cov_model.mstr_mon_trn_fifo .analysis_export);
-   slv_agent .drv_slv_ap .connect(cov_model.slv_mon_trn_fifo  .analysis_export);
-   slv_agent .mon_ap     .connect(cov_model.slv_mon_trn_fifo  .analysis_export);
-   
-endfunction: connect_coverage_model
 
 
 `endif // __UVME_AXIL_ST_ENV_SV__

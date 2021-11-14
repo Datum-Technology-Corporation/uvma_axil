@@ -15,8 +15,7 @@
 
 
 /**
- * Object created by AMBA Advanced eXtensible Interface agent sequences
- * extending uvma_axil_seq_base_c.
+ * Object created by AMBA Advanced eXtensible Interface agent sequences extending uvma_axil_seq_base_c.
  */
 class uvma_axil_slv_seq_item_c extends uvma_axil_base_seq_item_c;
    

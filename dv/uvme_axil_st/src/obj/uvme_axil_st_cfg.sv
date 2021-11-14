@@ -15,9 +15,8 @@
 
 
 /**
- * Object encapsulating all parameters for creating, connecting and running
- * AMBA Advanced eXtensible Interface VIP Self-Testing Environment (uvme_axil_st_env_c)
- * components.
+ * Object encapsulating all parameters for creating, connecting and running the Moore.io AXI-Lite Self-Testing UVM
+ * Environment (uvme_axil_st_env_c) components.
  */
 class uvme_axil_st_cfg_c extends uvml_cfg_c;
    
@@ -29,9 +28,11 @@ class uvme_axil_st_cfg_c extends uvml_cfg_c;
    rand bit                      trn_log_enabled      ; ///< 
    
    // Objects
-   rand uvma_axil_cfg_c         mstr_cfg; ///< 
-   rand uvma_axil_cfg_c         slv_cfg ; ///< 
-   rand uvml_sb_simplex_cfg_c   sb_cfg  ; ///< 
+   rand uvma_axil_cfg_c         mstr_cfg   ; ///< 
+   rand uvma_axil_cfg_c         slv_cfg    ; ///< 
+   rand uvml_sb_simplex_cfg_c   sb_e2e_cfg ; ///< 
+   rand uvml_sb_simplex_cfg_c   sb_mstr_cfg; ///< 
+   rand uvml_sb_simplex_cfg_c   sb_slv_cfg ; ///< 
    
    
    `uvm_object_utils_begin(uvme_axil_st_cfg_c)
@@ -41,9 +42,11 @@ class uvme_axil_st_cfg_c extends uvml_cfg_c;
       `uvm_field_int (                         cov_model_enabled    , UVM_DEFAULT)
       `uvm_field_int (                         trn_log_enabled      , UVM_DEFAULT)
       
-      `uvm_field_object(mstr_cfg, UVM_DEFAULT)
-      `uvm_field_object(slv_cfg , UVM_DEFAULT)
-      `uvm_field_object(sb_cfg  , UVM_DEFAULT)
+      `uvm_field_object(mstr_cfg   , UVM_DEFAULT)
+      `uvm_field_object(slv_cfg    , UVM_DEFAULT)
+      `uvm_field_object(sb_e2e_cfg , UVM_DEFAULT)
+      `uvm_field_object(sb_mstr_cfg, UVM_DEFAULT)
+      `uvm_field_object(sb_slv_cfg , UVM_DEFAULT)
    `uvm_object_utils_end
    
    
@@ -75,32 +78,35 @@ class uvme_axil_st_cfg_c extends uvml_cfg_c;
       }
       
       if (trn_log_enabled) {
-         /*soft*/ mstr_cfg.trn_log_enabled == 1;
-         /*soft*/ slv_cfg .trn_log_enabled == 1;
+         mstr_cfg.trn_log_enabled == 1;
+         slv_cfg .trn_log_enabled == 1;
       }
       else {
-         /*soft*/ mstr_cfg.trn_log_enabled == 0;
-         /*soft*/ slv_cfg .trn_log_enabled == 0;
+         mstr_cfg.trn_log_enabled == 0;
+         slv_cfg .trn_log_enabled == 0;
       }
    }
    
    constraint agents_protocol_cons {
-      mstr_cfg.addr_bus_width == 32;
-      slv_cfg .addr_bus_width == 32;
-      mstr_cfg.data_bus_width == 32;
-      slv_cfg .data_bus_width == 32;
-      
+      mstr_cfg.data_bus_width == slv_cfg.data_bus_width;
+      mstr_cfg.addr_bus_width == slv_cfg.addr_bus_width;
       mstr_cfg.drv_mode == UVMA_AXIL_MODE_MSTR;
       slv_cfg .drv_mode == UVMA_AXIL_MODE_SLV ;
    }
    
    constraint sb_cfg_cons {
+      sb_e2e_cfg .mode == UVML_SB_MODE_IN_ORDER;
+      sb_mstr_cfg.mode == UVML_SB_MODE_IN_ORDER;
+      sb_slv_cfg .mode == UVML_SB_MODE_IN_ORDER;
       if (scoreboarding_enabled) {
-         /*soft*/ sb_cfg.enabled == 1;
-         sb_cfg.mode == UVML_SB_MODE_IN_ORDER;
+         sb_e2e_cfg .enabled == 1;
+         sb_mstr_cfg.enabled == 0;
+         sb_slv_cfg .enabled == 0;
       }
       else {
-         sb_cfg.enabled == 0;
+         sb_e2e_cfg .enabled == 0;
+         sb_mstr_cfg.enabled == 0;
+         sb_slv_cfg .enabled == 0;
       }
    }
    
@@ -117,9 +123,11 @@ function uvme_axil_st_cfg_c::new(string name="uvme_axil_st_cfg");
    
    super.new(name);
    
-   mstr_cfg = uvma_axil_cfg_c::type_id::create("mstr_cfg");
-   slv_cfg  = uvma_axil_cfg_c::type_id::create("slv_cfg" );
-   sb_cfg   = uvml_sb_simplex_cfg_c ::type_id::create("sb_cfg"  );
+   mstr_cfg    = uvma_axil_cfg_c      ::type_id::create("mstr_cfg"   );
+   slv_cfg     = uvma_axil_cfg_c      ::type_id::create("slv_cfg"    );
+   sb_e2e_cfg  = uvml_sb_simplex_cfg_c::type_id::create("sb_e2e_cfg" );
+   sb_mstr_cfg = uvml_sb_simplex_cfg_c::type_id::create("sb_mstr_cfg");
+   sb_slv_cfg  = uvml_sb_simplex_cfg_c::type_id::create("sb_slv_cfg" );
    
 endfunction : new
 

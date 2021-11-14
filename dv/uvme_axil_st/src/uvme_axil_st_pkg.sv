@@ -45,6 +45,9 @@ package uvme_axil_st_pkg;
    `include "uvme_axil_st_constants.sv"
    
    // Objects
+   `include "uvme_axil_st_e2e_mon_trn.sv"
+   `include "uvme_axil_st_mstr_mon_trn.sv"
+   `include "uvme_axil_st_slv_mon_trn.sv"
    `include "uvme_axil_st_cfg.sv"
    `include "uvme_axil_st_cntxt.sv"
    
@@ -52,7 +55,6 @@ package uvme_axil_st_pkg;
    `include "uvme_axil_st_cov_model.sv"
    `include "uvme_axil_st_prd.sv"
    `include "uvme_axil_st_vsqr.sv"
-   `include "uvme_axil_st_slv_sb_delay.sv"
    `include "uvme_axil_st_env.sv"
    
    // Virtual sequences

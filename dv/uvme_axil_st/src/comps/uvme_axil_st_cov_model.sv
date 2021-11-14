@@ -18,30 +18,12 @@
  * Component encapsulating AMBA Advanced eXtensible Interface Self-Test Environment functional
  * coverage model.
  */
-class uvme_axil_st_cov_model_c extends uvm_component;
+class uvme_axil_st_cov_model_c extends uvma_axil_cov_model_c;
    
-   // Coverage targets
-   uvme_axil_st_cfg_c         cfg;
-   uvme_axil_st_cntxt_c       cntxt;
-   uvma_axil_mstr_seq_item_c  mstr_seq_item;
-   uvma_axil_slv_seq_item_c   slv_seq_item;
-   uvma_axil_mon_trn_c        mstr_mon_trn;
-   uvma_axil_mon_trn_c        slv_mon_trn;
-   
-   // TLM
-   uvm_tlm_analysis_fifo#(uvma_axil_mstr_seq_item_c)  mstr_seq_item_fifo;
-   uvm_tlm_analysis_fifo#(uvma_axil_slv_seq_item_c )  slv_seq_item_fifo ;
-   uvm_tlm_analysis_fifo#(uvma_axil_mon_trn_c      )  mstr_mon_trn_fifo ;
-   uvm_tlm_analysis_fifo#(uvma_axil_mon_trn_c      )  slv_mon_trn_fifo  ;
+   `uvm_component_utils(uvme_axil_st_cov_model_c)
    
    
-   `uvm_component_utils_begin(uvme_axil_st_cov_model_c)
-      `uvm_field_object(cfg  , UVM_DEFAULT)
-      `uvm_field_object(cntxt, UVM_DEFAULT)
-   `uvm_component_utils_end
-   
-   
-   covergroup axil_st_cfg_cg;
+   /*covergroup axil_st_cfg_cg;
       // TODO Implement axil_st_cfg_cg
       //      Ex: abc_cpt : coverpoint cfg.abc;
       //          xyz_cpt : coverpoint cfg.xyz;
@@ -75,7 +57,7 @@ class uvme_axil_st_cov_model_c extends uvm_component;
       // TODO Implement axil_st_slv_mon_trn_cg
       //      Ex: abc_cpt : coverpoint mon_trn.abc;
       //          xyz_cpt : coverpoint mon_trn.xyz;
-   endgroup : axil_st_slv_mon_trn_cg
+   endgroup : axil_st_slv_mon_trn_cg*/
    
    
    /**
@@ -84,44 +66,44 @@ class uvme_axil_st_cov_model_c extends uvm_component;
    extern function new(string name="uvme_axil_st_cov_model", uvm_component parent=null);
    
    /**
-    * Ensures cfg & cntxt handles are not null.
-    */
-   extern virtual function void build_phase(uvm_phase phase);
-   
-   /**
-    * Describe uvme_axil_st_cov_model_c::run_phase()
-    */
-   extern virtual task run_phase(uvm_phase phase);
-   
-   /**
     * TODO Describe uvme_axil_st_cov_model_c::sample_cfg()
     */
-   extern function void sample_cfg();
+   extern virtual function void sample_cfg();
    
    /**
     * TODO Describe uvme_axil_st_cov_model_c::sample_cntxt()
     */
-   extern function void sample_cntxt();
+   extern virtual function void sample_cntxt();
    
    /**
-    * TODO Describe uvme_axil_st_cov_model_c::sample_mstr_seq_item()
+    * TODO Describe uvme_axil_st_cov_model_c::sample_mon_trn()
     */
-   extern function void sample_mstr_seq_item();
+   extern virtual function void sample_mon_trn();
    
    /**
-    * TODO Describe uvme_axil_st_cov_model_c::sample_slv_seq_item()
+    * TODO Describe uvme_axil_st_cov_model_c::sample_seq_item()
     */
-   extern function void sample_slv_seq_item();
+   extern virtual function void sample_seq_item();
    
    /**
     * TODO Describe uvme_axil_st_cov_model_c::sample_mstr_mon_trn()
     */
-   extern function void sample_mstr_mon_trn();
+   extern virtual function void sample_mstr_mon_trn();
+   
+   /**
+    * TODO Describe uvme_axil_st_cov_model_c::sample_mstr_seq_item()
+    */
+   extern virtual function void sample_mstr_seq_item();
    
    /**
     * TODO Describe uvme_axil_st_cov_model_c::sample_slv_mon_trn()
     */
-   extern function void sample_slv_mon_trn();
+   extern virtual function void sample_slv_mon_trn();
+   
+   /**
+    * TODO Describe uvme_axil_st_cov_model_c::sample_slv_seq_item()
+    */
+   extern virtual function void sample_slv_seq_item();
    
 endclass : uvme_axil_st_cov_model_c
 
@@ -133,114 +115,60 @@ function uvme_axil_st_cov_model_c::new(string name="uvme_axil_st_cov_model", uvm
 endfunction : new
 
 
-function void uvme_axil_st_cov_model_c::build_phase(uvm_phase phase);
-   
-   super.build_phase(phase);
-   
-   void'(uvm_config_db#(uvme_axil_st_cfg_c)::get(this, "", "cfg", cfg));
-   if (!cfg) begin
-      `uvm_fatal("CFG", "Configuration handle is null")
-   end
-   
-   void'(uvm_config_db#(uvme_axil_st_cntxt_c)::get(this, "", "cntxt", cntxt));
-   if (!cntxt) begin
-      `uvm_fatal("CNTXT", "Context handle is null")
-   end
-   
-   // Build TLM objects
-   mstr_seq_item_fifo = new("mstr_seq_item_fifo", this);
-   slv_seq_item_fifo  = new("slv_seq_item_fifo" , this);
-   mstr_mon_trn_fifo  = new("mstr_mon_trn_fifo" , this);
-   slv_mon_trn_fifo   = new("slv_mon_trn_fifo"  , this);
-   
-endfunction : build_phase
-
-
-task uvme_axil_st_cov_model_c::run_phase(uvm_phase phase);
-   
-   super.run_phase(phase);
-  
-  fork
-    // Configuration
-    forever begin
-      cntxt.sample_cfg_e.wait_trigger();
-      sample_cfg();
-    end
-    
-    // Context
-    forever begin
-      cntxt.sample_cntxt_e.wait_trigger();
-      sample_cntxt();
-    end
-    
-    // 'mstr' sequence item coverage
-    forever begin
-       mstr_seq_item_fifo.get(mstr_seq_item);
-       sample_mstr_seq_item();
-    end
-    
-    // 'slv' sequence item coverage
-    forever begin
-       slv_seq_item_fifo.get(slv_seq_item);
-       sample_slv_seq_item();
-    end
-    
-    // 'mstr' monitored transaction coverage
-    forever begin
-       mstr_mon_trn_fifo.get(mstr_mon_trn);
-       sample_mstr_mon_trn();
-    end
-    
-    // 'slv' monitored transaction coverage
-    forever begin
-       slv_mon_trn_fifo.get(slv_mon_trn);
-       sample_slv_mon_trn();
-    end
-  join_none
-   
-endtask : run_phase
-
-
 function void uvme_axil_st_cov_model_c::sample_cfg();
    
-  axil_st_cfg_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_cfg();
    
 endfunction : sample_cfg
 
 
 function void uvme_axil_st_cov_model_c::sample_cntxt();
    
-   axil_st_cntxt_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_cntxt();
    
 endfunction : sample_cntxt
 
 
-function void uvme_axil_st_cov_model_c::sample_mstr_seq_item();
+function void uvme_axil_st_cov_model_c::sample_mon_trn();
    
-   axil_st_mstr_seq_item_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_mon_trn();
    
-endfunction : sample_mstr_seq_item
+endfunction : sample_mon_trn
 
 
-function void uvme_axil_st_cov_model_c::sample_slv_seq_item();
+function void uvme_axil_st_cov_model_c::sample_seq_item();
    
-   axil_st_slv_seq_item_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_seq_item();
    
-endfunction : sample_slv_seq_item
+endfunction : sample_seq_item
 
 
 function void uvme_axil_st_cov_model_c::sample_mstr_mon_trn();
    
-   axil_st_mstr_mon_trn_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_mstr_mon_trn();
    
 endfunction : sample_mstr_mon_trn
 
 
+function void uvme_axil_st_cov_model_c::sample_mstr_seq_item();
+   
+   // TODO Implement uvme_axil_st_cov_model_c::sample_mstr_seq_item();
+   
+endfunction : sample_mstr_seq_item
+
+
 function void uvme_axil_st_cov_model_c::sample_slv_mon_trn();
    
-   axil_st_slv_mon_trn_cg.sample();
+   // TODO Implement uvme_axil_st_cov_model_c::sample_slv_mon_trn();
    
 endfunction : sample_slv_mon_trn
+
+
+function void uvme_axil_st_cov_model_c::sample_slv_seq_item();
+   
+   // TODO Implement uvme_axil_st_cov_model_c::sample_slv_seq_item();
+   
+endfunction : sample_slv_seq_item
 
 
 `endif // __UVME_AXIL_ST_COV_MODEL_SV__

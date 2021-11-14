@@ -88,11 +88,6 @@ class uvmt_axil_st_base_test_c extends uvml_test_c;
    extern virtual task reset_phase(uvm_phase phase);
    
    /**
-    * Prints out start of phase banners.
-    */
-   extern virtual function void phase_started(uvm_phase phase);
-   
-   /**
     * Indicates to the test bench (uvmt_axil_st_tb) that the test has completed.
     * This is done by checking the properties of the phase argument.
     */
@@ -147,11 +142,6 @@ class uvmt_axil_st_base_test_c extends uvml_test_c;
    extern function void create_components();
    
    /**
-    * Prints overlined and underlined text in uppercase.
-    */
-   extern function void print_banner(string text);
-   
-   /**
     * Starts clock generation via clknrst_gen_vif functions.
     */
    extern task start_clk();
@@ -189,7 +179,6 @@ endfunction : build_phase
 function void uvmt_axil_st_base_test_c::connect_phase(uvm_phase phase);
    
    super.connect_phase(phase);
-   
    vsequencer = env.vsequencer;
    
 endfunction : connect_phase
@@ -198,7 +187,6 @@ endfunction : connect_phase
 task uvmt_axil_st_base_test_c::run_phase(uvm_phase phase);
    
    super.run_phase(phase);
-   
    start_clk();
    
 endtask : run_phase
@@ -215,17 +203,6 @@ task uvmt_axil_st_base_test_c::reset_phase(uvm_phase phase);
    `uvm_info("TEST", "De-asserted reset", UVM_NONE)
    
 endtask : reset_phase
-
-
-function void uvmt_axil_st_base_test_c::phase_started(uvm_phase phase);
-   
-   string  phase_name = phase.get_name();
-   
-   super.phase_started(phase);
-   
-   print_banner($sformatf("start of %s phase", phase_name));
-   
-endfunction : phase_started
 
 
 function void uvmt_axil_st_base_test_c::phase_ended(uvm_phase phase);
@@ -313,16 +290,6 @@ function void uvmt_axil_st_base_test_c::create_components();
    // TODO Implement uvmt_axil_st_base_test_c::create_components()
    
 endfunction : create_components
-
-
-function void uvmt_axil_st_base_test_c::print_banner(string text);
-   
-   $display("");
-   $display("*******************************************************************************");
-   $display(text.toupper());
-   $display("*******************************************************************************");
-   
-endfunction : print_banner
 
 
 task uvmt_axil_st_base_test_c::start_clk();
