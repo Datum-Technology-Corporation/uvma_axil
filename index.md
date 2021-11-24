@@ -6,7 +6,9 @@
 ----------------
 
 ## About
-The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible Interface-Lite (AXI-Lite) (AXI-L) (AXIL) UVM Agent is a compact, sequence-based solution to Driving/Monitoring both sides of an AXI-Lite interface.  This project consists of the agent (`uvma_axil_pkg`), the self-testing UVM environment (`uvme_axil_st_pkg`) and the test bench (`uvmt_axil_st_pkg`) to verify the agent against itself.
+The [Moore.io](https://www.mooreio.com) AMBA® IP Suite's Advanced eXtensible Lite Interface (AXI-Lite) UVM Agent is a pure UVM implementaiton for driving and monitoring both sides of the protocol.
+![Block Diagram](assets/img/agent_block_diagram.svg)
+This project consists of the agent (`uvma_axil_pkg`), the self-testing UVM environment (`uvme_axil_st_pkg`) and the test bench (`uvmt_axil_st_pkg`) to verify the agent against itself.
 
 
 ## Management
