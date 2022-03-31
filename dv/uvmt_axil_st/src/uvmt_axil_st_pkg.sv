@@ -16,12 +16,12 @@
 
 // Pre-processor macros
 `include "uvm_macros.svh"
-`include "uvml_macros.sv"
-`include "uvml_logs_macros.sv"
-`include "uvml_sb_macros.sv"
-`include "uvma_axil_macros.sv"
-`include "uvme_axil_st_macros.sv"
-`include "uvmt_axil_st_macros.sv"
+`include "uvml_macros.svh"
+`include "uvml_logs_macros.svh"
+`include "uvml_sb_macros.svh"
+`include "uvma_axil_macros.svh"
+`include "uvme_axil_st_macros.svh"
+`include "uvmt_axil_st_macros.svh"
 
 // Time units and precision for this test bench
 timeunit       1ns;
@@ -36,30 +36,30 @@ timeprecision  1ps;
  * UVM Agent.
  */
 package uvmt_axil_st_pkg;
-   
+
    import uvm_pkg         ::*;
    import uvml_pkg        ::*;
    import uvml_logs_pkg   ::*;
    import uvml_sb_pkg     ::*;
    import uvma_axil_pkg   ::*;
    import uvme_axil_st_pkg::*;
-   
+
    // Constants / Structs / Enums
    `include "uvmt_axil_st_tdefs.sv"
    `include "uvmt_axil_st_constants.sv"
-   
+
    // Virtual sequence library
    `include "uvmt_axil_st_vseq_lib.sv"
-   
+
    // Base test
    `include "uvmt_axil_st_test_cfg.sv"
    `include "uvmt_axil_st_base_test.sv"
-   
+
    // Tests
    `include "uvmt_axil_st_reads_test.sv"
    `include "uvmt_axil_st_writes_test.sv"
    `include "uvmt_axil_st_all_access_test.sv"
-   
+
 endpackage : uvmt_axil_st_pkg
 
 

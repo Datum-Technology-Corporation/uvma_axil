@@ -16,10 +16,10 @@
 
 // Pre-processor macros
 `include "uvm_macros.svh"
-`include "uvml_macros.sv"
-`include "uvml_logs_macros.sv"
-`include "uvml_ral_macros.sv"
-`include "uvma_axil_macros.sv"
+`include "uvml_macros.svh"
+`include "uvml_logs_macros.svh"
+`include "uvml_ral_macros.svh"
+`include "uvma_axil_macros.svh"
 
 // Interfaces / Modules / Checkers
 `include "uvma_axil_if.sv"
@@ -33,26 +33,26 @@
  * Interface.
  */
 package uvma_axil_pkg;
-   
+
    import uvm_pkg      ::*;
    import uvml_pkg     ::*;
    import uvml_logs_pkg::*;
    import uvml_ral_pkg ::*;
-   
+
    // Constants / Structs / Enums
    `include "uvma_axil_constants.sv"
    `include "uvma_axil_tdefs.sv"
-   
+
    // Objects
    `include "uvma_axil_cfg.sv"
    `include "uvma_axil_cntxt.sv"
-   
+
    // High-level transactions
    `include "uvma_axil_mon_trn.sv"
    `include "uvma_axil_base_seq_item.sv"
    `include "uvma_axil_mstr_seq_item.sv"
    `include "uvma_axil_slv_seq_item.sv"
-   
+
    // Agent components
    `include "uvma_axil_cov_model.sv"
    `include "uvma_axil_drv.sv"
@@ -61,13 +61,13 @@ package uvma_axil_pkg;
    `include "uvma_axil_mon_trn_logger.sv"
    `include "uvma_axil_seq_item_logger.sv"
    `include "uvma_axil_agent.sv"
-   
+
    // Sequences
    `include "uvma_axil_seq_lib.sv"
-   
+
    // Misc.
    `include "uvma_axil_reg_adapter.sv"
-   
+
 endpackage : uvma_axil_pkg
 
 
